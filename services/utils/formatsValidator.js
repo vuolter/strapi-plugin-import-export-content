@@ -51,6 +51,7 @@ function urlIsMedia(url) {
         return false;
     }
   } catch (error) {
+    strapi.log.error(error);
     return false;
   }
 }

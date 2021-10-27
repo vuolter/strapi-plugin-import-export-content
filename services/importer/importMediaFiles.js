@@ -52,7 +52,7 @@ async function importMediaFromUrl(url, user) {
     if (uploadedFile && uploadedFile.id) return uploadedFile.id;
     return null;
   } catch (err) {
-    console.error(err);
+    strapi.log.error(err);
     return null;
   }
 }

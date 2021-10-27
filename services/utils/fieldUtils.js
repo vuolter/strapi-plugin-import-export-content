@@ -40,6 +40,7 @@ function getFieldsFromItems(items) {
     try {
       Object.keys(item).forEach((fieldName) => fieldNames.add(fieldName));
     } catch (err) {
+      strapi.log.error(err);
       console.error(err);
     }
   });

@@ -66,7 +66,7 @@ function ImportPage({ contentTypes }) {
         message: "import.analyze.success",
       });
     } catch (error) {
-      console.error(error);
+      strapi.log.error(error);
       strapi.notification.toggle({
         type: "warning",
         message: "import.analyze.error",

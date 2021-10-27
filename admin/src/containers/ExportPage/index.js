@@ -91,6 +91,7 @@ function ImportPage({ contentTypes }) {
 
       setContentToExport(data);
     } catch (error) {
+      strapi.log.error(error);
       strapi.notification.toggle({
         type: "warning",
         message: `export.items.error`,

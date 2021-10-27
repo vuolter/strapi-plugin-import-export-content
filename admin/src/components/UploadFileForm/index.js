@@ -20,6 +20,7 @@ function UploadFileForm({ onSubmit }) {
       setData(content);
       setFile(file);
     } catch (err) {
+      strapi.log.error(err);
       strapi.notification.toggle({
         type: "warning",
         message: "import.file.content.error",

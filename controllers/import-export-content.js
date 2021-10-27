@@ -38,7 +38,7 @@ module.exports = {
       const data = await service.preAnalyzeContent(ctx);
       ctx.send({ data, message: "ok" });
     } catch (error) {
-      console.error(error);
+      ctx.log.error(error);
       ctx.throw(406, `could not parse: ${error}`);
     }
   },
@@ -71,7 +71,7 @@ module.exports = {
           : "No Items Imported",
       });
     } catch (error) {
-      console.error(error);
+      ctx.log.error(error);
       ctx.throw(406, `could not parse: ${error}`);
     }
   },
@@ -93,7 +93,7 @@ module.exports = {
       const data = await service.exportItems(ctx);
       ctx.send({ data, message: "ok" });
     } catch (error) {
-      console.error(error);
+      ctx.log.error(error);
       ctx.throw(406, `could not parse: ${error}`);
     }
   },
