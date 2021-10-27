@@ -15,6 +15,7 @@ export function isUrlMedia(url) {
       case "ogg":
       case "webm":
       case "avi":
+      case "avif":
         return true;
       default:
         return false;
