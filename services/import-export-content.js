@@ -33,19 +33,19 @@ module.exports = {
 
     const {
       attributes,
-      options: { draftAndPublish },
+      options: { draftAndPublish }
     } = target;
 
     const mappedItems = await mapFieldsToTargetFields({
       items,
       fields,
       attributes,
-      user,
+      user
     });
-    return importContent(target, mappedItems, {
+    return await importContent(target, mappedItems, {
       [CREATED_BY_ATTRIBUTE]: user,
       [UPDATED_BY_ATTRIBUTE]: user,
-      [PUBLISHED_AT_ATTRIBUTE]: draftAndPublish && asDraft ? null : Date.now(),
+      ...(draftAndPublish && asDraft ? {[PUBLISHED_AT_ATTRIBUTE]: null} : {}),
     });
   },
 

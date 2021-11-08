@@ -55,7 +55,7 @@ function ImportPage({ contentTypes }) {
         method: "POST",
         body: { data, type },
       });
-
+      
       // Set Content Type Data to map
       setTarget(contentTypes.find(({ uid }) => uid === importDest));
       setAnalysis(response.data);

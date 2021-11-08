@@ -50,12 +50,14 @@ function getFieldsFromItems(items) {
 
 function mapFieldsToTargetFields({ items, fields, attributes, user }) {
   const fieldNames = getFieldsFromItems(items);
+  
   return Promise.all(
     items.map(async (item) => {
       const mappedItem = {};
 
       for (const fieldname of fieldNames) {
         const { targetField } = fields[fieldname];
+
         if (targetField && targetField !== "none") {
           const attribute = attributes[targetField];
           let targetItem = item[fieldname];
@@ -75,7 +77,14 @@ function mapFieldsToTargetFields({ items, fields, attributes, user }) {
         }
       }
 
-      return mappedItem;
+      if ("locale" in item && "localizations" in item) {
+        const localizations = mappedItem["localizations"] = item["localizations"];
+        for (localization of localizations) {
+          delete localization["published_at"];
+        }
+      }
+
+      return {item: mappedItem, id: item.id};
     })
   );
 }

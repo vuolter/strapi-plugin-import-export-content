@@ -1,28 +1,30 @@
-const importToCollectionType = async (uid, item) => {
+const importToCollectionType = async (uid, data) => {
   try {
-    await strapi.entityService.create({ data: item }, { model: uid });
-    // await strapi.query(uid).create(item);
-    return true;
+    return await strapi.entityService.create({ data }, { model: uid });
   } catch (error) {
     strapi.log.error(error);
-    return false;
+    return null;
   }
 };
 
-const importToSingleType = async (uid, item) => {
+const importToSingleType = async (uid, data) => {
   try {
+    let item = null;
+    
     const existing = await strapi.query(uid).find({});
+
     if (existing.length > 0) {
-      const { id } = existing[0];
-      delete item.created_by;
-      await strapi.query(uid).update({ id }, item);
+      item = existing[0];
+      delete data.created_by;
+      await strapi.query(uid).update({ id }, data);
     } else {
-      strapi.query(uid).create(item);
+      item = await strapi.query(uid).create(data);
     }
-    return [true];
+    return item;
+
   } catch (error) {
     strapi.log.error(error);
-    return [false];
+    return null;
   }
 };
 

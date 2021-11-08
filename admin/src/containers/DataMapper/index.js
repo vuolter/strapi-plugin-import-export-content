@@ -16,15 +16,22 @@ const filterIgnoreFields = (fieldName) =>
     "created_by",
     "updated_at",
     "updated_by",
-    "published_at",
   ].includes(fieldName);
 
 function DataMapper({ analysis, target, onImport }) {
   const { fieldsInfo, parsedData } = analysis;
-  const { kind, attributes, options } = target;
+  const { kind, attributes, options, pluginOptions } = target;
+
+  const { draftAndPublish } = options;
+  const localized = pluginOptions?.i18n?.localized;
+
+  if (localized) {
+    attributes.locale = { type: "text" }
+  }
+  attributes.published_at = { type: "timestamp" }
 
   const isSingleType = kind === "singleType";
-  const [uploadAsDraft, setUploadAsDraft] = useState(options.draftAndPublish);
+  const [uploadAsDraft, setUploadAsDraft] = useState(draftAndPublish);
 
   const filteredAttributes = useMemo(
     () => Object.keys(attributes).filter(filterIgnoreFields),
@@ -146,10 +153,10 @@ function DataMapper({ analysis, target, onImport }) {
           <span className="mr-3">Count of Items to Import:</span>
           <strong>{kind === "singleType" ? 1 : importItems.length}</strong>
         </Row>
-        {options.draftAndPublish && (
+        {draftAndPublish && (
           <Row>
             <Checkbox
-              message="Upload as Draft"
+              message="Force upload as Draft"
               name="uploadAsDraft"
               value={uploadAsDraft}
               onChange={() => setUploadAsDraft(!uploadAsDraft)}
